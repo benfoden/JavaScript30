@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Click and Drag</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="items">
     <div class="item item1">01</div>
@@ -34,8 +36,45 @@
     <div class="item item25">25</div>
   </div>
 
-<script>
-</script>
 
-  </body>
+  <script>
+    const slider = document.querySelector('.items');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+      // console.log(startX);
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault(); // stop any text selecting, etc.
+      const x = e.pageX - slider.offsetLeft;
+      const walk = x - startX; // get the difference of start and current
+      slider.scrollLeft = (scrollLeft - walk) * 2; // scroll based on walk difference
+
+      console.log(walk);
+      // console.log(x, startX);
+      // console.count(isDown);
+      // console.log('Do work son!');
+    });
+  </script>
+
+</body>
+
 </html>
